@@ -1,16 +1,15 @@
 const express = require("express");
 const logger = require("morgan");
 const fs = require("fs");
-const path = require("path");
+const { v4: uuidv4 } = require("uuid");
 
+const PORT = process.env.PORT || 8080;
 const app = express();
 // Serve static assets
 app.use(express.static(__dirname + "/public"));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(logger("dev"));
-
-const PORT = process.env.PORT || 8080;
 
 const db = __dirname + "/db/db.json";
 const indexPage = __dirname + "/public/index.html";
@@ -27,6 +26,26 @@ app.get("/notes", function (req, res) {
 app.get("/api/notes", function (req, res) {
   res.sendFile(db);
 });
+
+app.post("/api/notes", function (req, res) {
+  fs.readFile(__dirname + "/db/db.json", "utf8", function (err, data) {
+    // parse data
+    const notes = JSON.parse(data);
+    const note = {
+      id: uuidv4(),
+      ...req.body,
+    };
+    //push parsed data to parsed data array
+    notes.push(note);
+
+    //stringify data
+    const stringifiedData = JSON.stringify(notes, null, 2);
+    fs.writeFile(__dirname + "/db/db.json", stringifiedData, function () {
+      res.json(note);
+    });
+  });
+});
+
 
 app.listen(PORT, () =>
   console.log(`App listening at http://localhost:${PORT}`)
