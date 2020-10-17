@@ -21,7 +21,7 @@ app.get("/", function (req, res) {
 
 app.get("/notes", function (req, res) {
   res.sendFile(notesPage);
-});
+}); 
 
 app.get("/api/notes", function (req, res) {
   res.sendFile(db);
@@ -46,6 +46,30 @@ app.post("/api/notes", function (req, res) {
   });
 });
 
+app.delete("/api/notes/:id", function (req, res) {
+  const { id } = req.params;
+  fs.readFile(__dirname + "/db/db.json", "utf8", function (err, data) {
+    //n parse data
+    let notes = JSON.parse(data);
+
+    const note = {
+      id: uuidv4(),
+      ...req.body,
+    };
+
+    notes = notes.filter((note) => note.id !== id);
+
+    const stringifiedData = JSON.stringify(notes, null, 2);
+    //write to server
+    fs.writeFile(__dirname + "/db/db.json", stringifiedData, function () {
+      res.json(true);
+    });
+  });
+});
+
+app.all("*", function (req, res) {
+  res.sendFile(__dirname + "/public/index.html");
+});
 
 app.listen(PORT, () =>
   console.log(`App listening at http://localhost:${PORT}`)
