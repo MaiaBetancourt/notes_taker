@@ -1,20 +1,5 @@
 [
   {
-    "id": "b",
-    "title": "im",
-    "text": "world"
-  },
-  {
-    "id": "c",
-    "title": "im",
-    "text": "world"
-  },
-  {
-    "id": "i",
-    "title": "im",
-    "text": "world"
-  },
-  {
     "id": "25d43d8e-7392-4d48-993d-7dd994ddc43d",
     "title": "hello",
     "text": "hahahaha"
@@ -23,5 +8,15 @@
     "id": "85e98c5a-865b-4ee3-a908-8a8882b671dd",
     "title": "go to target",
     "text": "yay!"
+  },
+  {
+    "id": "cefa9a1e-6981-4e69-973a-1266b42d0a00",
+    "title": "Heyyyoooo",
+    "text": "got a new note"
+  },
+  {
+    "id": "6ce420e0-6aac-493c-930b-965bf26a9f57",
+    "title": "hi",
+    "text": "it's a new note "
   }
 ]
